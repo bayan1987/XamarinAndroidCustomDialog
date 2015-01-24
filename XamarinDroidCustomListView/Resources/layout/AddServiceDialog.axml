@@ -1,7 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-</LinearLayout>
+<ScrollView xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:minWidth="25px"
+    p1:minHeight="25px"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/scrollView1">
+    <LinearLayout
+        p1:orientation="vertical"
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/linearLayoutContainer"
+        p1.gravity="center">
+        <TextView
+            p1:text="Add Service Item"
+            p1:textAppearance="?android:attr/textAppearanceLarge"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            p1:layout_gravity="left"
+            p1:id="@+id/textTitle" />
+        <TextView
+            p1:text="Name"
+            p1:textAppearance="?android:attr/textAppearanceMedium"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            style="@style/LabelStyle"
+            p1:id="@+id/textViewName" />
+        <View
+            style="@style/DividerStyle" />
+        <EditText
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/editTextName" />
+        <TextView
+            p1:text="Description"
+            p1:textAppearance="?android:attr/textAppearanceMedium"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            style="@style/LabelStyle"
+            p1:id="@+id/textViewDescription" />
+        <View
+            style="@style/DividerStyle" />
+        <EditText
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/editTextDescription" />
+        <TextView
+            p1:text="Price"
+            p1:textAppearance="?android:attr/textAppearanceMedium"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            style="@style/LabelStyle"
+            p1:id="@+id/textViewPrice" />
+        <View
+            style="@style/DividerStyle" />
+        <EditText
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/editTextPrice" />
+        <LinearLayout
+            p1:orientation="horizontal"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/linearLayout1">
+            <Spinner
+                p1:layout_width="0dp"
+                p1:layout_height="match_parent"
+                p1:layout_weight="1"
+                p1:gravity="center_vertical"
+                p1:id="@+id/spinnerCategory" />
+            <CheckBox
+                p1:text="Add New Category?"
+                p1:layout_width="wrap_content"
+                p1:layout_height="wrap_content"
+                p1:id="@+id/checkBoxAddCategory" />
+        </LinearLayout>
+        <LinearLayout
+            p1:orientation="horizontal"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/linearLayoutCategorySection">
+            <EditText
+                p1:layout_width="wrap_content"
+                p1:layout_height="match_parent"
+                p1:id="@+id/editTextAddCategory" />
+            <Button
+                p1:text="Button"
+                p1:layout_width="wrap_content"
+                p1:layout_height="match_parent"
+                p1:id="@+id/button1" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

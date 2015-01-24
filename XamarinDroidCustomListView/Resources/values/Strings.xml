@@ -3,4 +3,5 @@
     <string name="Hello">Hello World, Click Me!</string>
     <string name="ApplicationName">XamarinDroidCustomListView</string>
     <string name="no_services">You have not added any service</string>
+   <string name="add_service_item">Add Service Item</string>
 </resources>
