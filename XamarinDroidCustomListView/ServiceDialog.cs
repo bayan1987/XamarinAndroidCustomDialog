@@ -81,6 +81,7 @@ namespace XamarinDroidCustomListView
                     else
                     {
                         var newCategory = new ServiceCategory();
+                        newCategory.Name = category;
                         CategoryManager.SaveCategory(newCategory);
                         LoadSpinnerData();
                     }
@@ -88,29 +89,16 @@ namespace XamarinDroidCustomListView
                 CategorySpinner.ItemSelected += spinner_ItemSelected;
 
                 builder.SetView(dialogView);
-                builder.SetPositiveButton("Add Service", (EventHandler<DialogClickEventArgs>)null);
-                builder.SetNegativeButton("Cancel", (EventHandler<DialogClickEventArgs>)null);
+                builder.SetPositiveButton("Add Service", HandlePositiveButtonClick);
+                builder.SetNegativeButton("Cancel", HandleNegativeButtonClick);
             }
 
 
             //Create the builder and use it to get reference to the buttons
             var dialog = builder.Create();
-            var yesButton = dialog.GetButton((int)DialogButtonType.Positive);
-            var noButton = dialog.GetButton((int)DialogButtonType.Negative);
+            //var yesButton = dialog.GetButton((int)DialogButtonType.Positive);
+            //var noButton = dialog.GetButton((int)DialogButtonType.Negative);
 
-            //Postive button event handlers
-            yesButton.Click += (sender, args) =>
-            {
-                if (HandlePositiveButtonClick())
-                {
-                    dialog.Dismiss();
-                }
-            };
-
-            //Negative button event handler
-            noButton.Click += (sender, args) => dialog.Dismiss();
-
-            //Return a dialog from the builder.
             return dialog;
         }
 
@@ -121,8 +109,10 @@ namespace XamarinDroidCustomListView
             SelectedCategory = spinner.GetItemIdAtPosition(e.Position).ToString(CultureInfo.InvariantCulture);
         }
 
-        private bool HandlePositiveButtonClick()
+        private void HandlePositiveButtonClick(object sender, DialogClickEventArgs e)
         {
+            var dialog = (AlertDialog) sender;
+
             //Create an instance of a ServiceItem object
             var service = new ServiceItem();
 
@@ -164,8 +154,17 @@ namespace XamarinDroidCustomListView
             //Save the ServiceItem to the database and check if the
             //result is successful
             var result = ServicesManager.SaveServiceItem(service);
-            return result == 1;
+            if (result == 1)
+            {
+                dialog.Dismiss();
+            }
             
+        }
+
+        private void HandleNegativeButtonClick(object sender, DialogClickEventArgs e)
+        {
+            var dialog = (AlertDialog)sender;
+            dialog.Dismiss();
         }
 
         private void LoadSpinnerData()

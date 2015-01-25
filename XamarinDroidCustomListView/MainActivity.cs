@@ -47,6 +47,25 @@ namespace XamarinDroidCustomListView
            // LoadData();
         }
 
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            var inflater = MenuInflater;
+            inflater.Inflate(Resource.Menu.ServiceMenu, menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            var id = item.ItemId;
+            if (id == Resource.Id.action_add_services)
+            {
+                var dialog = ServiceDialog.NewInstance();
+                dialog.Show(FragmentManager, "dialog");
+            }
+            return base.OnOptionsItemSelected(item);
+        }
+
+
         private void LoadData()
         {
             //First clear the adapter of any Services it has 

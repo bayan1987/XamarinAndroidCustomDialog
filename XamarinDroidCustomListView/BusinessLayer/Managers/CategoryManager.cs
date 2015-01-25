@@ -16,9 +16,9 @@ namespace XamarinDroidCustomListView.BusinessLayer.Managers
 {
     public class CategoryManager
     {
-         static CategoryManager()
+        static CategoryManager()
         {
-            
+
         }
 
         public static ServiceCategory GetCategory(int id)
@@ -39,6 +39,7 @@ namespace XamarinDroidCustomListView.BusinessLayer.Managers
         public static int DeleteCategory(int id)
         {
             return CategoryRepository.DeleteCategory(id);
-       
+
+        }
     }
 }
