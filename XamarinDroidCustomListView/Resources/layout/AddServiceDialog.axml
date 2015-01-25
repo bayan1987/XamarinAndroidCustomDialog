@@ -89,7 +89,7 @@
                 p1:text="Button"
                 p1:layout_width="wrap_content"
                 p1:layout_height="match_parent"
-                p1:id="@+id/button1" />
+                p1:id="@+id/buttonCategory" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

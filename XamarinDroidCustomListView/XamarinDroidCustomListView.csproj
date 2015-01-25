@@ -56,6 +56,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceDialog.cs" />
     <Compile Include="ServiceItem.cs" />
     <Compile Include="ServiceItemsAdapter.cs" />
   </ItemGroup>
