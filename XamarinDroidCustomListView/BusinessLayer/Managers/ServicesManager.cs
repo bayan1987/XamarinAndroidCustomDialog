@@ -11,6 +11,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using XamarinDroidCustomListView.DataAccess;
+using XamarinDroidCustomListView.Model;
 
 namespace XamarinDroidCustomListView.BusinessLayer.Managers
 {

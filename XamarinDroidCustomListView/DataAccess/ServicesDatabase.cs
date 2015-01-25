@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Android.Util;
 using XamarinDroidCustomListView.BusinessLayer.Contracts;
+using XamarinDroidCustomListView.Model;
 
 namespace XamarinDroidCustomListView.DataAccess
 {
@@ -18,6 +19,7 @@ namespace XamarinDroidCustomListView.DataAccess
         {
             //Create the tables
             CreateTable<ServiceItem>();
+            CreateTable<ServiceCategory>();
             Log.Info(MainActivity.Tag, "Database Created");
 
         }

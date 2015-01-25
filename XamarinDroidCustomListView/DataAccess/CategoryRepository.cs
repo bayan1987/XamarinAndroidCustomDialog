@@ -1,22 +1,22 @@
-﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using XamarinDroidCustomListView.Model;
+using Environment = System.Environment;
 
 namespace XamarinDroidCustomListView.DataAccess
 {
-	public class ServicesRepository
+	public class CategoryRepository
 	{
 		private ServicesDatabase _db = null;
 		protected static string DbLocation;
-		protected static ServicesRepository Me;
+		protected static CategoryRepository Me;
 
-		static ServicesRepository()
+		static CategoryRepository()
 		{
-			Me = new ServicesRepository();
+			Me = new CategoryRepository();
 		}
 
-		protected ServicesRepository()
+		protected CategoryRepository()
 		{
 			//set the db location;
 			DbLocation = DatabaseFilePath;
@@ -40,25 +40,24 @@ namespace XamarinDroidCustomListView.DataAccess
 
 		// CRUD (Create, Read, Update and Delete) methods
 
-		public static ServiceItem GetServiceItem(int id)
+		public static ServiceCategory GetCategory(int id)
 		{
-			return Me._db.GetItem<ServiceItem>(id);
+			return Me._db.GetItem<ServiceCategory>(id);
 		}
 
-		public static IEnumerable<ServiceItem> GetServiceItems()
+		public static IEnumerable<ServiceCategory> GetCategories()
 		{
-			return Me._db.GetItems<ServiceItem>();
+			return Me._db.GetItems<ServiceCategory>();
 		}
 
-		public static int SaveServiceItem(ServiceItem item)
+		public static int SaveCategory(ServiceCategory category)
 		{
-			return Me._db.SaveItem(item);
+			return Me._db.SaveItem(category);
 		}
 
-		public static int DeleteServiceItem(int id)
+		public static int DeleteCategory(int id)
 		{
-			return Me._db.DeleteItem<ServiceItem>(id);
+			return Me._db.DeleteItem<ServiceCategory>(id);
 		}
 	}
 }
-

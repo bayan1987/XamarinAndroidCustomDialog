@@ -10,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using XamarinDroidCustomListView.Model;
 
 namespace XamarinDroidCustomListView
 {
