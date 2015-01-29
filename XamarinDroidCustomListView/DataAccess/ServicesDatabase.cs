@@ -20,7 +20,7 @@ namespace XamarinDroidCustomListView.DataAccess
             //Create the tables
             CreateTable<ServiceItem>();
             CreateTable<ServiceCategory>();
-            Log.Info(MainActivity.Tag, "Database Created");
+            Log.Info(MainActivity.Tag, "Databases Created");
 
         }
 

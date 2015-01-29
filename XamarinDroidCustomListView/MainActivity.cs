@@ -32,7 +32,7 @@ namespace XamarinDroidCustomListView
             MyServiceListView = FindViewById<ListView>(Resource.Id.service_list);
 
             //Create an empty list of Service List
-            MyServiceItems = (List<ServiceItem>) ServicesManager.GetServiceItems();
+            MyServiceItems = new List<ServiceItem>();
             MyServiceItemsAdapter = new ServiceItemsAdapter(this, MyServiceItems);
 
             MyServiceListView.Adapter = MyServiceItemsAdapter;
@@ -44,7 +44,7 @@ namespace XamarinDroidCustomListView
         protected override void OnResume()
         {
             base.OnResume();
-           // LoadData();
+            LoadData();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -65,37 +65,24 @@ namespace XamarinDroidCustomListView
             return base.OnOptionsItemSelected(item);
         }
 
+        public void ServiceAdded(bool newServiceAdded)
+        {
+            if (newServiceAdded)
+            {
+                LoadData();
+            }
+        }
 
         private void LoadData()
         {
             //First clear the adapter of any Services it has 
            // MyServiceItemsAdapter.NotifyDataSetInvalidated();
-
-            Log.Info("LoadData", "Creating Service Instance");
-            var service1 = new ServiceItem
+            MyServiceItems = (List<ServiceItem>) ServicesManager.GetServiceItems();
+            foreach (var serviceItem in MyServiceItems)
             {
-                Name = "Baby Sitting Service",
-                Description = "Caring baby sitting service",
-                Price = 75,
-                Category = "Domestic"
-                
-            };
-            //MyServiceItemsAdapter.Add(service1);
-           var result = ServicesManager.SaveServiceItem(service1);
-            Log.Info(Tag," First insert " + result);
+                MyServiceItemsAdapter.Add(serviceItem);
+            }
 
-
-            var service2 = new ServiceItem
-            {
-                Name = "House painting",
-                Description = "Great looking paint service",
-                Price = 150,
-                Category = "Labor"
-
-            };
-           //MyServiceItemsAdapter.Add(service2);
-           var result2 = ServicesManager.SaveServiceItem(service2);
-           Log.Info(Tag, " First insert " + result2);
         }
     }
 

@@ -29,6 +29,10 @@ namespace XamarinDroidCustomListView
 
         protected string SelectedCategory = "";
 
+        /// <summary>
+        /// Constructor that creates a new instance of this Dialog
+        /// </summary>
+        /// <returns></returns>
         public static ServiceDialog NewInstance()
         {
             var dialogFragment = new ServiceDialog();
@@ -57,10 +61,12 @@ namespace XamarinDroidCustomListView
                 PriceEditText = dialogView.FindViewById<EditText>(Resource.Id.editTextPrice);
                 AddCategoryEditText = dialogView.FindViewById<EditText>(Resource.Id.editTextAddCategory);
                 CategorySpinner = dialogView.FindViewById<Spinner>(Resource.Id.spinnerCategory);
+               
                 CategoryLayout = dialogView.FindViewById<LinearLayout>(Resource.Id.linearLayoutCategorySection);
                 //Hide this section for now
                 CategoryLayout.Visibility = ViewStates.Invisible;
                 CategoryCheckBox = dialogView.FindViewById<CheckBox>(Resource.Id.checkBoxAddCategory);
+
                 CategoryCheckBox.Click += (sender, args) =>
                 {
                     //If checked, show the Category section otherwise hide
@@ -71,7 +77,7 @@ namespace XamarinDroidCustomListView
                 CategoryButton = dialogView.FindViewById<Button>(Resource.Id.buttonCategory);
                 CategoryButton.Click += (sender, args) =>
                 {
-                    var category = AddCategoryEditText.Text.ToString(CultureInfo.InvariantCulture);
+                    var category = AddCategoryEditText.Text.ToString();
 
                     //insert new category into the database
                     if (category.Trim().Length <= 0)
@@ -80,12 +86,21 @@ namespace XamarinDroidCustomListView
                     }
                     else
                     {
-                        var newCategory = new ServiceCategory();
-                        newCategory.Name = category;
+                        var newCategory = new ServiceCategory {Name = category};
                         CategoryManager.SaveCategory(newCategory);
+                        AddCategoryEditText.Text = "";
                         LoadSpinnerData();
                     }
                 };
+                //populate Spinner with data from database
+                //Good candidate for async
+                LoadSpinnerData(); 
+
+                //Set default selection for the spinner
+                CategorySpinner.SetSelection(0);
+                SelectedCategory = CategorySpinner.SelectedItem.ToString();
+                
+                //Set on item selected listener for the spinner
                 CategorySpinner.ItemSelected += spinner_ItemSelected;
 
                 builder.SetView(dialogView);
@@ -94,11 +109,10 @@ namespace XamarinDroidCustomListView
             }
 
 
-            //Create the builder and use it to get reference to the buttons
+            //Create the builder 
             var dialog = builder.Create();
-            //var yesButton = dialog.GetButton((int)DialogButtonType.Positive);
-            //var noButton = dialog.GetButton((int)DialogButtonType.Negative);
-
+           
+            //Now return the constructed dialog to the calling activity
             return dialog;
         }
 
@@ -106,7 +120,7 @@ namespace XamarinDroidCustomListView
         private void spinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
             var spinner = (Spinner)sender;
-            SelectedCategory = spinner.GetItemIdAtPosition(e.Position).ToString(CultureInfo.InvariantCulture);
+            SelectedCategory = string.Format("{0}", spinner.GetItemAtPosition(e.Position));
         }
 
         private void HandlePositiveButtonClick(object sender, DialogClickEventArgs e)
@@ -131,7 +145,7 @@ namespace XamarinDroidCustomListView
                 service.Name = name;
             }
 
-            //No need to check description is null
+            //No need to check if description is null
             //This field could be optional
             service.Description = DescriptionEditText.Text.ToString
                 (CultureInfo.InvariantCulture).Trim();
@@ -156,6 +170,7 @@ namespace XamarinDroidCustomListView
             var result = ServicesManager.SaveServiceItem(service);
             if (result == 1)
             {
+                ((MainActivity) this.Activity).ServiceAdded(true);
                 dialog.Dismiss();
             }
             
