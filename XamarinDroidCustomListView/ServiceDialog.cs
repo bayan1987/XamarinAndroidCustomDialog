@@ -18,6 +18,7 @@ namespace XamarinDroidCustomListView
 {
     public class ServiceDialog : DialogFragment
     {
+        //Create class properties
         protected EditText NameEditText;
         protected EditText DescriptionEditText;
         protected EditText PriceEditText;
@@ -27,10 +28,12 @@ namespace XamarinDroidCustomListView
         protected CheckBox CategoryCheckBox;
         protected Button CategoryButton;
 
+        //Create the string that will hold the value
+        //Of the category drop down selected item
         protected string SelectedCategory = "";
 
         /// <summary>
-        /// Constructor that creates a new instance of this Dialog
+        /// Method that creates and returns and instance of this dialog
         /// </summary>
         /// <returns></returns>
         public static ServiceDialog NewInstance()
@@ -56,6 +59,7 @@ namespace XamarinDroidCustomListView
 
             if (dialogView != null)
             {
+                //Initialize the properties
                 NameEditText = dialogView.FindViewById<EditText>(Resource.Id.editTextName);
                 DescriptionEditText = dialogView.FindViewById<EditText>(Resource.Id.editTextDescription);
                 PriceEditText = dialogView.FindViewById<EditText>(Resource.Id.editTextPrice);
@@ -80,15 +84,19 @@ namespace XamarinDroidCustomListView
                     var category = AddCategoryEditText.Text.ToString();
 
                     //insert new category into the database
-                    if (category.Trim().Length <= 0)
+                    if (!string.IsNullOrEmpty(category))
                     {
                         Toast.MakeText(Activity, "Please enter category name", ToastLength.Short);
                     }
                     else
                     {
                         var newCategory = new ServiceCategory {Name = category};
+                        //Call the Category Manager to save the category
                         CategoryManager.SaveCategory(newCategory);
                         AddCategoryEditText.Text = "";
+                        //Now call the method that loads the Spinner
+                        //So the Category you just added will be an available choice
+                        //in the drop down
                         LoadSpinnerData();
                     }
                 };
@@ -97,8 +105,8 @@ namespace XamarinDroidCustomListView
                 LoadSpinnerData(); 
 
                 //Set default selection for the spinner
-                CategorySpinner.SetSelection(0);
-                SelectedCategory = CategorySpinner.SelectedItem.ToString();
+                //CategorySpinner.SetSelection(0);
+                //SelectedCategory = CategorySpinner.SelectedItem.ToString();
                 
                 //Set on item selected listener for the spinner
                 CategorySpinner.ItemSelected += spinner_ItemSelected;
@@ -182,6 +190,10 @@ namespace XamarinDroidCustomListView
             dialog.Dismiss();
         }
 
+        /// <summary>
+        /// This method fetches the Categories from the database and 
+        /// Populates the drop down list (Spinner) with the return value
+        /// </summary>
         private void LoadSpinnerData()
         {
             var tempCategories = (List<ServiceCategory>) CategoryManager.GetCategories();

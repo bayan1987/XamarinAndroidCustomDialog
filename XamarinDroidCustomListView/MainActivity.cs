@@ -45,6 +45,7 @@ namespace XamarinDroidCustomListView
         {
             base.OnResume();
             LoadData();
+            Log.Info(Tag, "onResume called");
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -57,8 +58,11 @@ namespace XamarinDroidCustomListView
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             var id = item.ItemId;
+            //If someone clicks on the Add Service button
             if (id == Resource.Id.action_add_services)
             {
+                //Create a new dialog and all show on
+                //That dialog
                 var dialog = ServiceDialog.NewInstance();
                 dialog.Show(FragmentManager, "dialog");
             }
@@ -76,7 +80,7 @@ namespace XamarinDroidCustomListView
         private void LoadData()
         {
             //First clear the adapter of any Services it has 
-           // MyServiceItemsAdapter.NotifyDataSetInvalidated();
+            MyServiceItemsAdapter.Update();
             MyServiceItems = (List<ServiceItem>) ServicesManager.GetServiceItems();
             foreach (var serviceItem in MyServiceItems)
             {

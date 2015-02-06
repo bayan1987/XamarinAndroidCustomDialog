@@ -10,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using XamarinDroidCustomListView.BusinessLayer.Managers;
 using XamarinDroidCustomListView.Model;
 
 namespace XamarinDroidCustomListView
@@ -61,6 +62,7 @@ namespace XamarinDroidCustomListView
                 holder.Category = view.FindViewById<TextView>(Resource.Id.tvServiceCategory);
                 holder.EditButton = view.FindViewById<ImageButton>(Resource.Id.buttonEditService);
                 holder.DeleteButton = view.FindViewById<ImageButton>(Resource.Id.buttonDeleteService);
+                
                 view.Tag = holder;
             }
             else
@@ -77,12 +79,23 @@ namespace XamarinDroidCustomListView
             holder.Name.Text = tempServiceItem.Name;
             holder.Category.Text = tempServiceItem.Category;
             holder.Price.Text = String.Format("{0:C}", tempServiceItem.Price);
+            holder.DeleteButton.Click += (object sender, EventArgs e) =>
+            {
+                //get the id of this service item to be delete
+                ServicesManager.DeleteServiceItem(tempServiceItem.Id);
+                //First delete the item from memory
+                ServiceItems.Remove(tempServiceItem);
+
+                //Then refresh the screen to show the item has been removed
+                this.NotifyDataSetChanged();
+
+                //Then remove from the database as well
+                
+            };
             return view;
         }
 
-
-
-        private class ServiceViewHolder : Java.Lang.Object
+       private class ServiceViewHolder : Java.Lang.Object
         {
             public TextView Name { get; set; }
             public TextView Price { get; set; }
@@ -94,6 +107,12 @@ namespace XamarinDroidCustomListView
         public void Add(ServiceItem service)
         {
             ServiceItems.Add(service);
+            this.NotifyDataSetChanged();
+        }
+
+        public void Update()
+        {
+            ServiceItems.Clear();
             this.NotifyDataSetChanged();
         }
     }
