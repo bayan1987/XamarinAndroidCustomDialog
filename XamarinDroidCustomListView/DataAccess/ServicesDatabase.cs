@@ -59,7 +59,7 @@ namespace XamarinDroidCustomListView.DataAccess
         {
             lock (Locker)
             {
-                return Delete<T>(new T() {Id = id});
+                return Delete<T>(id);
             }
         }
 
